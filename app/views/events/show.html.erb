@@ -10,10 +10,14 @@
 				主催者
 			</div>
 			<div class="panel-body">
+			<% if @event.owner %>
 				<%= link_to(url_for_twitter(@event.owner)) do %>
 					<%= image_tag @event.owner.image_url %>
 					<%= "@#{@event.owner.nickname}" %>
 				<% end %>
+			<% else %>
+				退会したユーザです
+			<% end %>
 			</div>
 		</div>
 		<div class="panel panel-default">
@@ -81,7 +85,8 @@
 			</div>
 			<div class="panel-body">
 				<ul class="list-unstyled">
-					<% @tickets.each do |ticket| %>
+				<% @tickets.each do |ticket| %>
+					<% if ticket.user %>
 					<li>
 						<%= link_to(url_for_twitter(ticket.user)) do %>
 							<%= image_tag ticket.user.image_url, width: 20, height: 20 %>
@@ -89,7 +94,10 @@
 						<% end %>
 						<%= ticket.comment %>
 					</li>
+					<% else %>
+					<li>退会したユーザです</li>
 					<% end %>
+				<% end %>
 				</ul>
 			</div>
 		</div>
